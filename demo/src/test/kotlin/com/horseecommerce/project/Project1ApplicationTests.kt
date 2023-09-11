@@ -4,9 +4,6 @@ package com.horseecommerce.project
 import com.horseecommerce.project.dtos.ProductDTO
 import com.horseecommerce.project.model.Product.TypeProduct
 
-import com.jayway.jsonpath.DocumentContext
-import com.jayway.jsonpath.JsonPath
-
 import org.junit.jupiter.api.Test
 
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,8 +12,10 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
+
 import org.assertj.core.api.Assertions.assertThat
 import org.springframework.test.annotation.DirtiesContext
+import java.net.URI
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -49,5 +48,20 @@ class Project1ApplicationTests {
 		val response: ResponseEntity<String> = restTemplate.getForEntity("${basicURL}/2222", String::class.java)
 		assertThat(response.statusCode).isEqualTo(HttpStatus.NOT_FOUND)
 	}
+
+	@Test
+	fun shouldCreateNewProductAndReturnThePath(){
+		val produto = ProductDTO(name = "Pedro", price = 400, TypeProduct.Fast, quantity = 1)
+		val response: ResponseEntity<String> = restTemplate.postForEntity(basicURL, produto, String::class.java)
+		assertThat(response.statusCode).isEqualTo(HttpStatus.CREATED)
+
+		val newProductLocation: URI? = response.headers.location
+		val getResponse: ResponseEntity<String> = restTemplate.getForEntity(newProductLocation, String::class.java)
+		assertThat(getResponse.statusCode).isEqualTo(HttpStatus.OK)
+
+
+
+	}
+
 
 }

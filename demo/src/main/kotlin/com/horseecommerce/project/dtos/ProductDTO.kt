@@ -18,8 +18,8 @@ data class ProductDTO (
     @field:Min(100, message = "Product must coast at least 100")
     val price: Int,
 
-    @field:NotBlank(message = "Product must have a type")
-    @Pattern(regexp = "^Rare|Casual|Race$", message = "Product type must be 'Rare' or 'Casual' or 'Race'")
+    @field:NotNull(message = "Product must have a type")
+    @field:Pattern(regexp = "^Rare|Casual|Race$", message = "Product type must be 'Rare' or 'Casual' or 'Race'")
     val type: TypeProduct,
 
     @field:NotNull(message = "Product quantity can't be null")

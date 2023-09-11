@@ -1,12 +1,9 @@
 package com.horseecommerce.project.model.Product
 
+import jakarta.validation.constraints.*
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
-import jakarta.validation.constraints.Min
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotNull
-import jakarta.validation.constraints.Size
 
 @Document("Horses")
 data class Product(
@@ -26,7 +23,8 @@ data class Product(
 
     @Field("type")
     @Size(max = 6)
-    @field:NotBlank
+    @NotNull
+    @Pattern(regexp = "^Rare|Casual|Race$")
     var type: TypeProduct,
 
     @Field("quantity")
