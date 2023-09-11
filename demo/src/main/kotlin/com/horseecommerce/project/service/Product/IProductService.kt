@@ -1,14 +1,15 @@
 package com.horseecommerce.project.service.Product
 
+import com.horseecommerce.project.dtos.ProductDTO
+import com.horseecommerce.project.dtos.ProductRequestDTO
+import com.horseecommerce.project.dtos.ProductResponseDTO
 import com.horseecommerce.project.model.Product.Product
-import org.springframework.web.bind.annotation.RequestBody
 
 interface IProductService {
 
-    fun getAllProducts(): List<Product>
-
-    fun getProductByID(productID: String): Product
-    fun getProductQuantity(productID: String): Int
-    fun createProduct(newProduct: Product): Product
+    fun getAllProducts(): List<ProductResponseDTO>
+    fun getProductByID(productID: String): ProductResponseDTO
+    fun createProduct(newProduct: ProductDTO): ProductResponseDTO
+    fun updateProduct(id: String, dto: ProductRequestDTO): ProductResponseDTO
 
 }

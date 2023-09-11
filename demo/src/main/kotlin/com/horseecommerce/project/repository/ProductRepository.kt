@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ProductRepository: MongoRepository<Product, Long> {
     @Query("{ '_id': ?0}")
-    fun findProductByID(productID: String): Product
+    fun findProductByID(productID: String): Product?
 
 }
