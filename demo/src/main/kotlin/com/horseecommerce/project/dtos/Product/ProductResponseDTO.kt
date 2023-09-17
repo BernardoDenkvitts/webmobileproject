@@ -1,4 +1,4 @@
-package com.horseecommerce.project.dtos
+package com.horseecommerce.project.dtos.Product
 
 import com.horseecommerce.project.model.Product.TypeProduct
 

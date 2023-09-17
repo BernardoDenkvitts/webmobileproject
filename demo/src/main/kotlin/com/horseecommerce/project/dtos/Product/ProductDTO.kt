@@ -1,4 +1,4 @@
-package com.horseecommerce.project.dtos
+package com.horseecommerce.project.dtos.Product
 
 import com.horseecommerce.project.model.Product.TypeProduct
 import jakarta.validation.constraints.Min
@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 
 data class ProductDTO (
 
@@ -18,7 +20,8 @@ data class ProductDTO (
     @field:Min(100, message = "Product must coast at least 100")
     val price: Int,
 
-    @field:NotNull(message = "Product must have a type")
+    @field:NotBlank(message = "Product must have a type")
+    @Enumerated(value = EnumType.STRING)
     @field:Pattern(regexp = "^Rare|Casual|Race$", message = "Product type must be 'Rare' or 'Casual' or 'Race'")
     val type: TypeProduct,
 

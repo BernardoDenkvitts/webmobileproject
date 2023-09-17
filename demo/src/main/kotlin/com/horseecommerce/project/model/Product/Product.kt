@@ -4,8 +4,10 @@ import jakarta.validation.constraints.*
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 
-@Document("Horses")
+@Document("horses")
 data class Product(
 
     @Id
@@ -23,7 +25,7 @@ data class Product(
 
     @Field("type")
     @Size(max = 6)
-    @NotNull
+    @Enumerated(value = EnumType.STRING)
     @Pattern(regexp = "^Rare|Casual|Race$")
     var type: TypeProduct,
 
@@ -33,3 +35,4 @@ data class Product(
     var quantity: Int
 
 )
+

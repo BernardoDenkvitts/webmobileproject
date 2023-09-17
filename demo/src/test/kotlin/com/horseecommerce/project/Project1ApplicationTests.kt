@@ -1,7 +1,7 @@
 package com.horseecommerce.project
 
 
-import com.horseecommerce.project.dtos.ProductDTO
+import com.horseecommerce.project.dtos.Product.ProductDTO
 import com.horseecommerce.project.model.Product.TypeProduct
 
 import org.junit.jupiter.api.Test
