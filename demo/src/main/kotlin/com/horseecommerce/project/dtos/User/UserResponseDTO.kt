@@ -1,5 +1,6 @@
 package com.horseecommerce.project.dtos.User
 
+import com.horseecommerce.project.model.Product.Product
 import com.horseecommerce.project.model.User.Address
 
 data class UserResponseDTO(
@@ -8,5 +9,6 @@ data class UserResponseDTO(
     val last_name: String,
     val email: String,
     val phone: String,
-    val address: Address
+    val address: Address,
+    val products: List<Product>
 )

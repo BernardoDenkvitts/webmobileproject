@@ -3,35 +3,29 @@ package com.horseecommerce.project.model.Product
 import jakarta.validation.constraints.*
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
-import org.springframework.data.mongodb.core.mapping.Field
+import jakarta.validation.constraints.NotBlank
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
 
 @Document("horses")
 data class Product(
 
-    @Id
+    @field:Id
     var id: String? = null,
 
-    @Field("name")
-    @Size(min = 1, max = 30)
+    @field:Size(min = 1, max = 30)
     @field:NotBlank
     var name: String,
 
-    @Field("price")
-    @Min(100)
-    @NotNull
+    @field:Min(100)
+    @field:NotNull
     var price: Int,
 
-    @Field("type")
-    @Size(max = 6)
-    @Enumerated(value = EnumType.STRING)
-    @Pattern(regexp = "^Rare|Casual|Race$")
+    @field:Enumerated(value = EnumType.STRING)
     var type: TypeProduct,
 
-    @Field("quantity")
-    @Size(min = 0)
-    @NotNull
+    @field:Min(0)
+    @field:NotNull
     var quantity: Int
 
 )

@@ -1,28 +1,24 @@
 package com.horseecommerce.project.dtos.Product
 
 import com.horseecommerce.project.model.Product.TypeProduct
-import jakarta.validation.constraints.Min
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotNull
-import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
+import jakarta.validation.constraints.*
+import jakarta.validation.constraints.Min
+import jakarta.validation.constraints.NotNull
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
 
 data class ProductDTO (
 
-    @field:Size(min = 1, message = "Name must be at least 1 character long")
-    @field:Size(max = 30, message = "Name length cant be longer then 30")
     @field:NotBlank(message = "Product must have a name")
+    @field:Size(min = 1, max = 30 ,message="Name must be at least 1 character long")
     val name: String,
 
     @field:NotNull(message = "Product must have a price")
     @field:Min(100, message = "Product must coast at least 100")
     val price: Int,
 
-    @field:NotBlank(message = "Product must have a type")
-    @Enumerated(value = EnumType.STRING)
-    @field:Pattern(regexp = "^Rare|Casual|Race$", message = "Product type must be 'Rare' or 'Casual' or 'Race'")
+    @field:Enumerated(value = EnumType.STRING)
     val type: TypeProduct,
 
     @field:NotNull(message = "Product quantity can't be null")

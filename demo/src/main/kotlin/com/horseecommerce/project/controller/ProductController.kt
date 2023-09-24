@@ -6,6 +6,9 @@ import com.horseecommerce.project.dtos.Product.ProductResponseDTO
 import com.horseecommerce.project.service.Product.ProductService
 
 import jakarta.validation.Valid
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 
 import org.springframework.http.ResponseEntity
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.util.UriComponentsBuilder
@@ -30,8 +34,14 @@ import java.net.URI
 class ProductController(private val service: ProductService) {
 
     @GetMapping
-    public fun getAllProducts(): ResponseEntity<List<ProductResponseDTO>> {
-        return ResponseEntity.ok(service.getAllProducts())
+    public fun getAllProducts(
+        @RequestParam(required = false) productName: String?,
+        @PageableDefault(size = 5) pageable: Pageable
+    )
+    : ResponseEntity<Page<ProductResponseDTO>>
+    {
+
+        return ResponseEntity.ok(service.getAllProducts(productName, pageable))
     }
 
     @GetMapping("/{id}")
@@ -51,7 +61,7 @@ class ProductController(private val service: ProductService) {
 
     @PutMapping("/{id}")
     @Transactional
-    private fun updateProduct(@PathVariable id: String, @RequestBody dto: ProductRequestDTO): ResponseEntity<ProductResponseDTO> {
+    private fun updateProduct(@PathVariable id: String, @RequestBody @Valid dto: ProductRequestDTO): ResponseEntity<ProductResponseDTO> {
         return ResponseEntity.ok(service.updateProduct(id, dto))
     }
 

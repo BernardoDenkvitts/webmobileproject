@@ -1,5 +1,8 @@
 package com.horseecommerce.project.exceptions
 
+import com.fasterxml.jackson.core.JsonParseException
+import com.fasterxml.jackson.core.JsonProcessingException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.horseecommerce.project.dtos.ErrorResponseDTO
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
@@ -12,14 +15,26 @@ import java.lang.Exception
 @RestControllerAdvice
 class ExceptionHandler {
 
-    @ExceptionHandler(ThrowException::class)
+    @ExceptionHandler(NotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handlerNotFound(
-        exception: ThrowException,
+        exception: NotFoundException,
         request: HttpServletRequest
     ): ErrorResponseDTO {
         return ErrorResponseDTO(
             status = HttpStatus.NOT_FOUND.value(), error = HttpStatus.NOT_FOUND.name,
+            message = exception.message, path = request.servletPath
+        )
+    }
+
+    @ExceptionHandler(BadRequestException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleBadRequest(
+        exception: BadRequestException,
+        request: HttpServletRequest
+    ): ErrorResponseDTO {
+        return ErrorResponseDTO(
+            status = HttpStatus.BAD_REQUEST.value(), error = HttpStatus.BAD_REQUEST.name,
             message = exception.message, path = request.servletPath
         )
     }
