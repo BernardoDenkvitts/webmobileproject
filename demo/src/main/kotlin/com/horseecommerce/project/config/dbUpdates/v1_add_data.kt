@@ -1,4 +1,4 @@
-package com.horseecommerce.project.migration
+package com.horseecommerce.project.config.dbUpdates
 
 import com.horseecommerce.project.model.Product.Product
 import com.horseecommerce.project.model.Product.TypeProduct
@@ -26,19 +26,19 @@ class v1_add_data(private val productRespository: ProductRepository,
         productRespository.saveAll(newProducts)
 
         val newUsers: MutableList<User> = mutableListOf()
-        newUsers.add(User(first_name = "João", last_name = "Sobrenome1", password = "5555", email = "joao@gmail.com",
+        newUsers.add(User(first_name = "João", last_name = "Sobrenome1", pswrd = "5555", email = "joao@gmail.com",
             phone = "54653524312", address = Address(city = "Passo-Fundo", street = "Centro", st_num = 123)))
 
-        newUsers.add(User(first_name = "Gabriel", last_name = "Sobrenome2", password = "4444", email = "gabriel@gmail.com",
+        newUsers.add(User(first_name = "Gabriel", last_name = "Sobrenome2", pswrd = "4444", email = "gabriel@gmail.com",
             phone = "5465456436", address = Address(city = "Tapejara", street = "RualQualquer1", st_num = 321)))
 
-        newUsers.add(User(first_name = "Emerson", last_name = "Sobrenome3", password = "3333", email = "emerson@yahoo.com",
+        newUsers.add(User(first_name = "Emerson", last_name = "Sobrenome3", pswrd = "3333", email = "emerson@yahoo.com",
             phone = "54657865765", address = Address(city = "Tapera", street = "RualQualquer2", st_num = 545)))
 
-        newUsers.add(User(first_name = "Isadora", last_name = "Sobrenome4", password = "1111", email = "isadora@gmail.com",
+        newUsers.add(User(first_name = "Isadora", last_name = "Sobrenome4", pswrd = "1111", email = "isadora@gmail.com",
             phone = "5443241223", address = Address(city = "Porto-Alegre", street = "RuaQualquer3", st_num = 222)))
 
-        newUsers.add(User(first_name = "Luis", last_name = "Sobrenome5", password = "77777", email = "luis@gmail.com",
+        newUsers.add(User(first_name = "Luis", last_name = "Sobrenome5", pswrd = "77777", email = "luis@gmail.com",
             phone = "5498765234", address = Address(city = "Espumoso", street = "RuaQualquer4", st_num = 45)))
         userRespository.saveAll(newUsers)
     }

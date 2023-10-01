@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import jakarta.validation.constraints.NotBlank
+import org.springframework.data.mongodb.core.index.Indexed
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
 
@@ -15,6 +16,7 @@ data class Product(
 
     @field:Size(min = 1, max = 30)
     @field:NotBlank
+    @field:Indexed(name = "ProductNameIndex")
     var name: String,
 
     @field:Min(100)

@@ -31,8 +31,5 @@ data class UserDTO(
     @field:Size(min = 5, max = 15)
     val password: String,
 
-    @field:Valid
-    val address: Address
-
     // Na hora de criar novo usuario, intencionalmente a lista de produtos dele sera inicializada como vazia
 )

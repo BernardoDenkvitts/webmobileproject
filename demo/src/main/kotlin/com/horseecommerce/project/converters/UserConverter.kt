@@ -3,6 +3,7 @@ package com.horseecommerce.project.converters
 import com.horseecommerce.project.dtos.User.UserDTO
 import com.horseecommerce.project.dtos.User.UserResponseDTO
 import com.horseecommerce.project.model.User.User
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
 
 @Component
@@ -14,8 +15,7 @@ class UserConverter {
             last_name =  dto.last_name,
             email =  dto.email,
             phone =  dto.phone,
-            password =  dto.password,
-            address =  dto.address
+            pswrd =  BCryptPasswordEncoder().encode(dto.password)
         )
     }
 

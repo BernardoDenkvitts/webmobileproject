@@ -4,8 +4,10 @@ import com.horseecommerce.project.converters.UserConverter
 import com.horseecommerce.project.dtos.User.UserDTO
 import com.horseecommerce.project.dtos.User.UserRequestDTO
 import com.horseecommerce.project.dtos.User.UserResponseDTO
+import com.horseecommerce.project.exceptions.BadRequestException
 import com.horseecommerce.project.exceptions.NotFoundException
 import com.horseecommerce.project.model.Product.Product
+import com.horseecommerce.project.model.User.Address
 import com.horseecommerce.project.repository.ProductRepository
 import com.horseecommerce.project.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -33,26 +35,39 @@ class UserService(
     }
 
     override fun createUser(dto: UserDTO): UserResponseDTO {
+        if(repository.findByEmail(dto.email) != null){
+            throw BadRequestException("Email already exists")
+        }
         val newUser = repository.save(converter.toUser(dto))
         return converter.toUserResponseDTO(newUser)
     }
 
     override fun updateUser(id: String, dto: UserRequestDTO): UserResponseDTO {
         val user = repository.findByIdOrNull(id) ?: throw NotFoundException(USER_NOT_FOUND_MESSAGE)
-        val address = user.address.copy(
-            city = if(dto.address.city.isNullOrBlank()) user.address.city else dto.address.city,
-            street = if(dto.address.street.isNullOrBlank()) user.address.street else dto.address.street,
-            st_num = if(dto.address.st_num == null || (dto.address.st_num < 0
-                        || dto.address.st_num > 10000)) user.address.st_num
-            else dto.address.st_num
-        )
+        val address: Address
+
+        if(user.address != null) {
+            address = user.address.copy(
+                city = if (dto.address.city.isNullOrBlank()) user.address.city else dto.address.city,
+                street = if (dto.address.street.isNullOrBlank()) user.address.street else dto.address.street,
+                st_num = if (dto.address.st_num == null || (dto.address.st_num < 0
+                            || dto.address.st_num > 10000)
+                ) user.address.st_num
+                else dto.address.st_num
+            )
+        }else{
+            if(dto.address.city == null || dto.address.st_num == null || dto.address.street == null){
+                throw BadRequestException("Address can't have null fields")
+            }
+            address = Address(dto.address.city, dto.address.street, dto.address.st_num)
+        }
 
         val update = user.copy(
             first_name = if(dto.first_name.isNullOrBlank()) user.first_name else dto.first_name,
             last_name = if(dto.last_name.isNullOrBlank()) user.last_name else dto.last_name,
             email = if(dto.email.isNullOrBlank()) user.email else dto.email,
             phone =  if(dto.phone.isNullOrBlank()) user.phone else dto.phone,
-            password = if(dto.password.isNullOrBlank()) user.password else dto.password,
+            pswrd = if(dto.password.isNullOrBlank()) user.pswrd else dto.password,
             address = address,
             products = user.products
         )
