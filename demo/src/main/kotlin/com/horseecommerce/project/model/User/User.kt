@@ -49,6 +49,7 @@ data class User(
     val address: Address? = null,
 
     val products: MutableList<Product> = mutableListOf()
+
 ): UserDetails {
     override fun getAuthorities(): MutableList<SimpleGrantedAuthority> {
         if(role == UserRole.ADMIN){
