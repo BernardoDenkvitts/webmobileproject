@@ -14,8 +14,7 @@ class v2_update_user_role(
     fun updateUserRole(){
         val users = userRespository.findAll()
         users.forEach{
-            user ->
-            val updateRole = user.copy(role = UserRole.USER)
+            user -> val updateRole = user.copy(role = UserRole.USER)
             userRespository.save(updateRole)
         }
     }

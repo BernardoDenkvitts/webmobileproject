@@ -2,9 +2,6 @@ package com.horseecommerce.project.model.User
 
 import com.horseecommerce.project.model.Product.Product
 import jakarta.validation.Valid
-import jakarta.validation.constraints.Email
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.Size
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
@@ -19,34 +16,23 @@ data class User(
 
     @field:Id
     val id: String? = null,
-
-    @field:NotBlank
-    @field:Size(min = 1, max = 30)
     val first_name: String,
-
-    @field:NotBlank
-    @field:Size(min = 1, max = 45)
     val last_name: String,
 
-    @field:NotBlank
-    @field:Email
     @field:Indexed(name = "UserEmailIndex", unique = true)
     val email: String,
-
-    @field:NotBlank
-    @field:Size(min = 5, max = 25)
     val phone: String,
 
     @Field("password")
-    @field:NotBlank
-    @field:Size(min = 5, max = 15)
     val pswrd: String,
 
     @field:Enumerated(value = EnumType.STRING)
     val role: UserRole = UserRole.USER,
 
-    @field:Valid    // Assim que o usuario cria a conta ele não precisa dizer o endereço
-    val address: Address? = null,
+    @field:Valid
+    val address: Address? = null,   // Assim que o usuario cria a conta ele não precisa dizer o endereço
+
+    val creditCards: MutableSet<UserCreditCard> = mutableSetOf(),
 
     val products: MutableList<Product> = mutableListOf()
 

@@ -8,6 +8,6 @@ class LoginDTO(
     @field:Email
     val email: String,
 
-    @field:Size(min = 4, max = 15)
+    @field:Size(min = 3, max = 15)
     val password: String
 )

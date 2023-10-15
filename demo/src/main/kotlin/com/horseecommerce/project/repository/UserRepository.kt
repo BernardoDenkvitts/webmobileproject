@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository
 interface UserRepository: MongoRepository<User, String> {
 
     fun findByEmail(email: String): UserDetails?
+
 }

@@ -1,6 +1,6 @@
 package com.horseecommerce.project.controller
 
-import com.horseecommerce.project.dtos.User.AddressRequestDTO
+
 import com.horseecommerce.project.dtos.User.UserDTO
 import com.horseecommerce.project.dtos.User.UserRequestDTO
 import com.horseecommerce.project.dtos.User.UserResponseDTO
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.util.UriComponentsBuilder
@@ -38,34 +39,34 @@ class UserController(private val service: UserService) {
         return ResponseEntity.ok(service.findUserByID(id))
     }
 
-    @PostMapping
+    /*@PostMapping
     @Transactional
-    private fun createUser(
+    fun createUser(
         @RequestBody @Valid user: UserDTO, uriBuilder: UriComponentsBuilder
     ): ResponseEntity<UserResponseDTO> {
         val newUser: UserResponseDTO = service.createUser(user)
         val uri: URI = uriBuilder.path("/api/usuarios/${newUser.id}").build().toUri()
         return ResponseEntity.created(uri).body(newUser)
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    private fun deleteUser(@PathVariable id: String){
+    fun deleteUser(@PathVariable id: String){
         service.delete(id)
     }
 
     @PutMapping("/{id}")
     @Transactional
-    private fun updateUser(
-        @PathVariable id: String, @RequestBody dto: UserRequestDTO
+    fun updateUser(
+        @PathVariable id: String, @RequestBody @Valid dto: UserRequestDTO
     ): ResponseEntity<UserResponseDTO>{
         return ResponseEntity.ok(service.updateUser(id, dto))
     }
 
     @PutMapping("/product/{id}")
     @Transactional
-    private fun addToProductList(
+    fun addToProductList(
         @PathVariable id: String, @RequestBody dto: Product
     ): ResponseEntity<UserResponseDTO> {
         return ResponseEntity.ok(service.addToProductList(id, dto))
@@ -73,10 +74,20 @@ class UserController(private val service: UserService) {
 
     @PutMapping("/{id}/product/{productID}")
     @Transactional
-    private fun removeFromProductList(
+    fun removeFromProductList(
         @PathVariable id: String, @PathVariable productID: String
     ): ResponseEntity<UserResponseDTO> {
         return ResponseEntity.ok(service.removeFromProductList(id, productID))
     }
+
+    @PutMapping("/{id}/creditCard")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
+    fun removeCreditCard(
+        @PathVariable id: String, @RequestBody creditCardNumber: String
+    ) {
+        return service.removeCreditCard(id, creditCardNumber)
+    }
+
 
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.util.UriComponentsBuilder
 import com.horseecommerce.project.dtos.Authentication.LoginResponseDTO
+import jakarta.validation.Valid
+import org.springframework.transaction.annotation.Transactional
 
 
 @RestController
@@ -26,7 +28,7 @@ class AuthenticationController(
 ) {
 
     @PostMapping("/login")
-    fun login(@RequestBody dto: LoginDTO): ResponseEntity<LoginResponseDTO>{
+    fun login(@RequestBody @Valid dto: LoginDTO): ResponseEntity<LoginResponseDTO>{
         val userPassword = UsernamePasswordAuthenticationToken(dto.email, dto.password)
         val auth = authenticationManager.authenticate(userPassword)
         val token = tokenService.generateToken(auth.principal as User)
@@ -34,7 +36,8 @@ class AuthenticationController(
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody dto: UserDTO, uriBuilder: UriComponentsBuilder): ResponseEntity<UserResponseDTO> {
+    @Transactional
+    fun register(@RequestBody @Valid dto: UserDTO, uriBuilder: UriComponentsBuilder): ResponseEntity<UserResponseDTO> {
         val newUser = userService.createUser(dto)
         val uri = uriBuilder.path("/api/usuarios/${newUser.id}").build().toUri()
         return ResponseEntity.created(uri).body(newUser)

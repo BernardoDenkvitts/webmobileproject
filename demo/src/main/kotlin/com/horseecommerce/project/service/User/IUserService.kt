@@ -8,6 +8,7 @@ import com.horseecommerce.project.dtos.User.UserDTO
 import com.horseecommerce.project.dtos.User.UserRequestDTO
 import com.horseecommerce.project.dtos.User.UserResponseDTO
 import com.horseecommerce.project.model.Product.Product
+import java.time.YearMonth
 
 interface IUserService {
 
@@ -22,6 +23,8 @@ interface IUserService {
     fun addToProductList(id: String, dto: Product): UserResponseDTO
 
     fun removeFromProductList(id: String, productID: String): UserResponseDTO
+
+    fun removeCreditCard(id: String, creditCardNumber: String)
 
     fun delete(id: String)
 

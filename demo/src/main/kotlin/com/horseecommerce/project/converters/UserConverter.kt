@@ -27,6 +27,7 @@ class UserConverter {
             email = user.email,
             phone = user.phone,
             address = user.address,
+             creditCards = user.creditCards,
             products = user.products
         )
     }
