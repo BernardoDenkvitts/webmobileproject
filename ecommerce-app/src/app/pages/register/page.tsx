@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import FormInput from '../components/LoginAndRegister/LoginRegisterFields';
+import FormInput from '../../components/LoginAndRegister/LoginRegisterFields';
 import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
@@ -43,7 +43,7 @@ export default function LoginForm() {
 
                 if (response.ok) {
                     // Direcionada o usuario para a pagina principal
-                    router.push("/login")
+                    router.push("/")
                 } else {
                     const data = await response.json();
                     alert(`Erro: ${data.message}`);
@@ -55,7 +55,9 @@ export default function LoginForm() {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen">
+        <div className={`flex justify-center items-center h-screen
+                        bg-gradient-to-bl from-indigo-700 via-indigo-400 to-indigo-700
+                        text-white`}>
             <form className="w-full max-w-md p-20 bg-gray-800 rounded-md shadow-md text-white" onSubmit={handleSubmit}>
                 <h2 className="text-3xl font-semibold mb-4 text-center">Crie sua conta</h2>
                 <FormInput label="Nome" type="text" value={nome} onChange={setNome} />

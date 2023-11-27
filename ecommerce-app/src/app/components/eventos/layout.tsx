@@ -1,4 +1,5 @@
 import Titulo from "./titulo";
+
 interface LayoutProps {
     titulo: string
     children: any
